@@ -22,7 +22,7 @@ include_once './submit.php';
     <!-- google recaptcha javascript API library-->
     <script src="https://www.google.com/recaptcha/api.js"></script>
 
-    <!--Add a callback function to handle the token.-->
+    <!--Add a callback function to be called when the user successfully completes the reCAPTCHA challenge.-->
     <script>
     function onSubmit(token) {
     document.getElementById("contactForm").submit();
@@ -36,10 +36,13 @@ include_once './submit.php';
     <div class="cw-frm">
     <form id="contactForm" method="post" action="">
 
-    <!--status message-->
+    <!--status message depending on situation-->
     <?php if(!empty($statusMsg)){ ?>
         <p class="status-msg <?php echo $status; ?>"><?php echo $statusMsg; ?></p>
     <?php } ?>
+    <!--The PHP code is used to dynamically populate the form fields with any previously submitted data.
+     If the form submission script detected any errors or successes in the form submission, 
+     it will also output a status message above the form using PHP conditional statements-->
 
     <!-- Form fields -->
     <div class="input-group">
@@ -59,7 +62,12 @@ include_once './submit.php';
     
     <!-- Submit button with reCAPTCHA trigger -->
     <!--Add attributes to your html button.-->
-    <button class="g-recaptcha" 
+    <!--This class tells the Google reCAPTCHA API to render the reCAPTCHA challenge inside the button.-->
+    <!--data-sitekey----It identifies the website that is using the API.
+    data-call back----This is the name of the callback function that will be called 
+                        when the user successfully completes the reCAPTCHA challenge.
+    data-action--------This attribute specifies the action that the reCAPTCHA API should verify-->
+          <button class="g-recaptcha" 
         data-sitekey="6LcZ7EwlAAAAAMuXDioiRsVlCISZ1dsWHwKFEODo" 
         data-callback='onSubmit' 
         data-action='submit'>Submit</button>

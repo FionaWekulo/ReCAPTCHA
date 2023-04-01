@@ -4,6 +4,7 @@
 $secretKey     = '6LcZ7EwlAAAAAAY4bi-Jka9p4d9660yqJ21CPRPm';  
   
 // Email settings  
+//email address where the contact form submissions should be sent
 $recipientEmail = 'fionawekulo@gmail.com';  
   
 // Assign default values 
@@ -13,6 +14,8 @@ $status = 'error';
 // If the form is submitted 
 if(isset($_POST['submit_frm'])){  
     // Retrieve value from the form input fields 
+    //If the form has been submitted, the code retrieves the values from the form input fields, 
+    //trims whitespace from the values, and performs validation on each field.
     $postData = $_POST;  
     $name = trim($_POST['name']);  
     $email = trim($_POST['email']);  
@@ -30,6 +33,9 @@ if(isset($_POST['submit_frm'])){
     }  
   
     // Check whether submitted input data is valid  
+    //If there are no validation errors, the code validates the reCAPTCHA response using the 
+    //Google reCAPTCHA verification API. If the response is valid, the code sends an email to 
+    //the recipient email address with the contact form details.
     if(empty($valErr)){  
         // Validate reCAPTCHA response  
         if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){  
@@ -82,12 +88,17 @@ if(isset($_POST['submit_frm'])){
                 $statusMsg = 'Thank you! Your contact request has been submitted successfully.';  
                 $postData = '';  
             }else{  
+                //If the reCAPTCHA response is not valid, the code sets the status message to inform the 
+                //user that the verification failed. 
                 $statusMsg = 'The reCAPTCHA verification failed, please try again.';  
             }  
         }else{  
             $statusMsg = 'Something went wrong, please try again.';  
         }  
-    }else{  
+    }else{ 
+        //If the form was not submitted or there were validation errors, 
+            //the code sets the status message accordingly.
+             
         $valErr = !empty($valErr)?'<br/>'.trim($valErr, '<br/>'):'';  
         $statusMsg = 'Please fill all the mandatory fields:'.$valErr;  
     }  
